@@ -15,6 +15,9 @@ on:
         options:
           - staging
           - production
+  push:
+    branches:
+      - main
 
 jobs:
   greet:
