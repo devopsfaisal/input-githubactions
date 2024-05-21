@@ -1,0 +1,31 @@
+name: Manual Trigger Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Person to greet'
+        required: true
+        default: 'World'
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Print greeting
+      run: echo "Hello, ${{ github.event.inputs.name }}!"
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: greet
+    steps:
+    - name: Deploy to environment
+      run: echo "Deploying to ${{ github.event.inputs.environment }} environment"
